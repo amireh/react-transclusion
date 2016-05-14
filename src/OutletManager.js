@@ -24,7 +24,7 @@ module.exports = function OutletManager(config = {}) {
       `Outlet ${name} has already been defined.`
     );
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && config.verbose) {
       console.log('Outlet defined: "%s"', name);
     }
 
@@ -73,6 +73,19 @@ module.exports = function OutletManager(config = {}) {
 
   exports.getElements = function(name) {
     return getOutletByName(name) || [];
+  };
+
+  exports.isDefined = function(name) {
+    return !!getOutletByName(name);
+  };
+
+  exports.reset = function(name) {
+    if (name) {
+      outlets[name] = null;
+    }
+    else {
+      Object.keys(outlets).forEach(exports.reset);
+    }
   };
 
   return exports;

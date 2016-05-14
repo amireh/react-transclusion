@@ -97,6 +97,27 @@ describe('Outlet', function() {
     assert.equal(drill(subject).node.tagName, "UL");
   });
 
+  it('passes down custom outlet options', function() {
+    Outlet.add('foo', {
+      key: 'my-test-fu',
+
+      component: React.createClass({
+        propTypes: {
+          $outletOptions: React.PropTypes.shape({
+            foo: React.PropTypes.string
+          })
+        },
+
+        render() {
+          return <span>{this.props.$outletOptions.foo}</span>;
+        }
+      })
+    });
+
+    const subject = render(<Outlet name="foo" options={{ foo: 'bar' }} />, container);
+    assert.equal(drill(subject).node.textContent, "bar");
+  });
+
   function addToOutlet(name, contents) {
     Outlet.add(name, {
       key: 'my-test-fu',

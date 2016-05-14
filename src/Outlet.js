@@ -21,7 +21,10 @@ module.exports = function OutletFactory(outletManager) {
           .length > 0
         ;
       },
+
+      isDefined: outletManager.isDefined,
       define: outletManager.define,
+      reset: outletManager.reset,
     },
 
     propTypes: {
@@ -43,6 +46,8 @@ module.exports = function OutletFactory(outletManager) {
        *           The props to inject into the rendered elements, if any.
        */
       elementProps: object,
+
+      options: object,
 
       /**
        * @property {React.Component}
@@ -115,6 +120,7 @@ module.exports = function OutletFactory(outletManager) {
         children: null,
         tagName: 'div',
         elementProps: {},
+        options: {},
         alwaysRenderChildren: false,
         forwardChildren: false,
         fnRenderElement: null,
@@ -164,10 +170,16 @@ module.exports = function OutletFactory(outletManager) {
       const Component = element.component;
 
       if (this.props.fnRenderElement) {
-        return this.props.fnRenderElement(element.key, elementProps, Component);
+        return this.props.fnRenderElement(element.key, elementProps, Component, this.props.options);
       }
       else {
-        return <Component key={element.key} {...elementProps} />;
+        return (
+          <Component
+            key={element.key}
+            $outletOptions={this.props.options}
+            {...elementProps}
+          />
+        );
       }
     },
 
