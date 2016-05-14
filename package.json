@@ -1,6 +1,6 @@
 {
   "name": "react-transclusion",
-  "version": "1.0.0-1",
+  "version": "1.1.0",
   "description": "Render arbitrary components into outlets for use in dynamic layouts.",
   "main": "lib/index.js",
   "scripts": {
