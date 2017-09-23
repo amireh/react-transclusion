@@ -1,2 +1,4 @@
-exports.OutletFactory = require('./Outlet');
 exports.OutletManager = require('./OutletManager');
+exports.Outlet = require('./ContextualOutlet');
+exports.OutletProvider = require('./OutletProvider');
+exports.OutletRenderer = require('./OutletRenderer');

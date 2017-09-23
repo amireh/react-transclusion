@@ -60,15 +60,17 @@ module.exports = function OutletManager(config = {}) {
       return exports.add(name, element);
     }
 
-    invariant(typeof element.key === 'string',
-      "You must specify a unique string key as @key for the outlet component."
+    const key = element.key || element.component && element.component.constructor.name;
+
+    invariant(typeof key === 'string',
+      `Missing @key for outlet occupant of "${name}"`
     );
 
     invariant(typeof element.component === 'function',
       "You must specify a React.Class as @component for the outlet component."
     );
 
-    outlet.push(element);
+    outlet.push(Object.assign({}, element, { key }));
   };
 
   exports.getElements = function(name) {
