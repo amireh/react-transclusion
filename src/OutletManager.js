@@ -1,4 +1,5 @@
 const invariant = require('invariant');
+const assign = require('object-assign');
 
 /**
  * This is the underlying module that allows you to register elements for
@@ -60,7 +61,10 @@ module.exports = function OutletManager(config = {}) {
       return exports.add(name, element);
     }
 
-    const key = element.key || element.component && element.component.constructor.name;
+    const key = element.key || element.component && (
+      element.component.displayName ||
+      element.component.constructor.name
+    );
 
     invariant(typeof key === 'string',
       `Missing @key for outlet occupant of "${name}"`
@@ -70,7 +74,7 @@ module.exports = function OutletManager(config = {}) {
       "You must specify a React.Class as @component for the outlet component."
     );
 
-    outlet.push(Object.assign({}, element, { key }));
+    outlet.push(assign({}, element, { key }));
   };
 
   exports.getElements = function(name) {
