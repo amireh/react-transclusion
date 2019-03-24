@@ -42,6 +42,11 @@ module.exports = function OutletFactory(outletManager) {
       tagName: string,
 
       /**
+       * @property {Object} [tagProps={}]
+       */
+      tagProps: object,
+
+      /**
        * @property {Object} [elementProps={}]
        *           The props to inject into the rendered elements, if any.
        */
@@ -119,6 +124,7 @@ module.exports = function OutletFactory(outletManager) {
       return {
         children: null,
         tagName: 'div',
+        tagProps: {},
         elementProps: {},
         options: {},
         alwaysRenderChildren: false,
@@ -141,7 +147,11 @@ module.exports = function OutletFactory(outletManager) {
         children.push(this.props.children);
       }
 
-      return <this.props.tagName>{children}</this.props.tagName>;
+      return (
+        <this.props.tagName {...this.props.tagProps}>
+          {children}
+        </this.props.tagName>
+      );
     },
 
     renderElements(elementProps) {

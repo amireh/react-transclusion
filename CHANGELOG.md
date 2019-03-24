@@ -1,3 +1,7 @@
+# 1.4.0
+
+- accept `tagProps`
+
 # 1.3.2
 
 - removed usage of `Object.assign` for IE11 compatibility
